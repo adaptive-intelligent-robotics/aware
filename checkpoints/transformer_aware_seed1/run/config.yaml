@@ -1,0 +1,559 @@
+debug: false
+device: cuda
+env:
+  _target_: env.mjx.MJXEnv
+  cfg_override_groups: null
+  debug_jit: false
+  debug_nans: true
+  domain_randomise: true
+  enable_rendering: false
+  env_args:
+    acceleration_normalisation: 0.5
+    action_clip_range: 1
+    action_mag_normalisation: 2.0
+    action_penalty_scale: 0.05
+    action_penalty_threshold: 0.5
+    action_repeat: 1
+    action_scale_ctrlrange_frac: 0.25
+    actuator_max_scaling: 0.0
+    clip_actions: true
+    com_max_move: 0.0
+    ctrl_dt: 0.05
+    distance_normalisation: 2.0
+    episode_length: 2000
+    joystick_target: true
+    joystick_target_max_step: 0.002
+    mass_max_scaling: 0.0
+    max_armature_scale: 2.0
+    max_ctrlrange_scale: 1.5
+    max_gear_ratio: 1.0
+    min_armature_scale: 0.1
+    min_ctrlrange_scale: 0.5
+    min_gear_ratio: 1.0
+    mp_all_off_chance: 0.2
+    mp_each_off_chance: 0.2
+    mp_max_cycle_time: 12
+    mp_max_pos_amplitude: 0.2
+    mp_max_pos_noise: 0.0
+    mp_max_rot_amplitude: 0.2
+    mp_max_rot_noise: 0.0
+    mp_min_cycle_time: 6
+    num_required_within_threshold: 50
+    payload_max_inertial_length: 0.2
+    payload_max_mass: 2.0
+    payload_min_inertial_length: 0.2
+    payload_min_mass: 0.1
+    penalise_action_mag: false
+    relative_actions: false
+    reset_noise_scale: 0.0
+    roa_action_in_obs: false
+    roa_n_privileged_info: 7
+    roa_n_proprioceptive: 17
+    roa_n_timesteps_history: 50
+    scale_actions: true
+    seed: 106
+    sim_dt: 0.005
+    target_move_chance: 0.002
+    target_threshold: 0.1
+    threshold_termination: false
+    use_action_change_mag: true
+    use_dreamer: false
+    use_motion_platform: false
+    use_roa: false
+    vision: false
+    xml_motion_platform: crane_with_base.xml
+    xml_name: crane_8ft.xml
+  fk_only: true
+  name: Crane
+  num_envs: 4096
+  render_all_environments: false
+  rerandomise_rate: 5
+  rngseed: 106
+  structured_randomisation: false
+  structured_repeats: null
+  torch: true
+env_seed: 106
+evaluator:
+  _recursive_: false
+  _target_: evaluation.discriminator.DiscriminatorEval
+  create_env: true
+  env_config:
+    _target_: env.mjx.MJXEnv
+    cfg_override_groups: null
+    debug_jit: false
+    debug_nans: true
+    domain_randomise: true
+    enable_rendering: false
+    env_args:
+      acceleration_normalisation: 0.5
+      action_clip_range: 1
+      action_mag_normalisation: 2.0
+      action_penalty_scale: 0.05
+      action_penalty_threshold: 0.5
+      action_repeat: 1
+      action_scale_ctrlrange_frac: 0.25
+      actuator_max_scaling: 0.0
+      clip_actions: true
+      com_max_move: 0.0
+      ctrl_dt: 0.05
+      distance_normalisation: 2.0
+      episode_length: 2000
+      joystick_target: true
+      joystick_target_max_step: 0.002
+      mass_max_scaling: 0.0
+      max_armature_scale: 2.0
+      max_ctrlrange_scale: 1.5
+      max_gear_ratio: 1.0
+      min_armature_scale: 0.1
+      min_ctrlrange_scale: 0.5
+      min_gear_ratio: 1.0
+      mp_all_off_chance: 0.2
+      mp_each_off_chance: 0.2
+      mp_max_cycle_time: 12
+      mp_max_pos_amplitude: 0.2
+      mp_max_pos_noise: 0.0
+      mp_max_rot_amplitude: 0.2
+      mp_max_rot_noise: 0.0
+      mp_min_cycle_time: 6
+      num_required_within_threshold: 50
+      payload_max_inertial_length: 0.2
+      payload_max_mass: 2.0
+      payload_min_inertial_length: 0.2
+      payload_min_mass: 0.1
+      penalise_action_mag: false
+      relative_actions: false
+      reset_noise_scale: 0.0
+      roa_action_in_obs: false
+      roa_n_privileged_info: 7
+      roa_n_proprioceptive: 17
+      roa_n_timesteps_history: 50
+      scale_actions: true
+      seed: 106
+      sim_dt: 0.005
+      target_move_chance: 0.002
+      target_threshold: 0.1
+      threshold_termination: false
+      use_action_change_mag: true
+      use_dreamer: false
+      use_motion_platform: false
+      use_roa: false
+      vision: false
+      xml_motion_platform: crane_with_base.xml
+      xml_name: crane_8ft.xml
+    fk_only: true
+    name: Crane
+    num_envs: 4096
+    render_all_environments: false
+    rerandomise_rate: 5
+    rngseed: 106
+    structured_randomisation: false
+    structured_repeats: null
+    torch: true
+  env_overrides:
+    domain_randomise: true
+    env_args:
+      actuator_max_scaling: 0.0
+      com_max_move: 0.0
+      ctrl_dt: 0.05
+      mass_max_scaling: 0.0
+      max_armature_scale: 2.0
+      max_ctrlrange_scale: 1.5
+      max_gear_ratio: 1.0
+      min_armature_scale: 0.1
+      min_ctrlrange_scale: 0.5
+      min_gear_ratio: 1.0
+      payload_max_inertial_length: 0.2
+      payload_max_mass: 2.0
+      payload_min_inertial_length: 0.2
+      payload_min_mass: 0.1
+      xml_name: crane_8ft.xml
+    fk_only: true
+    num_envs: 2000
+    rngseed: 100
+    structured_randomisation: false
+    structured_repeats: null
+    torch: false
+  normal_trajectory_list:
+  - 2025-09-10_10-30-41_mixed_DR.pkl
+  plot_groups:
+  - y_label: no changes
+    ymax: 0.0
+    ymin: 0.0
+  - y_label: payload
+    ymax: 2.0
+    ymin: 0.1
+  - y_label: link mass
+    ymax: 1.4
+    ymin: 0.6
+  - y_label: actuators
+    ymax: 1.4
+    ymin: 0.6
+  ref_index: 100
+  ref_trajectory_folder: eval_trajectories
+  ref_trajectory_group_names:
+  - Sinusoid
+  - Randomised
+  - Training
+  - Real data
+  ref_trajectory_groups:
+  - 0
+  - 1
+  - 1
+  - 2
+  - 3
+  ref_trajectory_list:
+  - 2025-08-27_09-48-26_sinusoid_DR_manipulated.pkl
+  - 2025-08-27_09-48-26_random_walk_DR_manipulated.pkl
+  - 2025-08-27_09-48-26_random_DR_manipulated.pkl
+  - 2025-08-27_09-48-26_mixed_DR_manipulated.pkl
+  - 2025-09-17_16-10_human_operator_90traj_270eplen_raw.pkl
+  ref_trajectory_names:
+  - Sinusoid
+  - Random walk
+  - Random
+  - Mixed op DR
+  - Real joystick
+exp_name: attention_roa_prob
+logging:
+  debug_log_level: 1
+  json_filename: metrics.jsonl
+  log_rate: 1
+  log_to_JSON: true
+  log_to_terminal: true
+  log_to_wandb: true
+  main_logdir: run
+  media_log_rate: 25
+  media_logdir: run/media
+  save_configs_as: config.yaml
+  video_frames: 1000
+model:
+  _target_: agents.latent_predictor.Agent_Latent_Estimator
+  dataloader_num_threads: 2
+  dataset_path: dataset/2025-11-03/17-55-03
+  device: cuda
+  from_sim_priv_info_indexes:
+  - 0
+  - 10
+  - 11
+  - 12
+  - 13
+  - 14
+  - 15
+  load_from_dataset: true
+  network:
+    _recursive_: false
+    _target_: agents.latent_predictor.LatentPredictor
+    add_calibrated_latent_noise: false
+    add_denoise_step: false
+    add_next_action: true
+    add_privileged_info: true
+    alphas:
+      acceleration: 0.0
+      actuated: 0.0
+      consistency: 0.0
+      contrastive: 0.0
+      decoder: 0.1
+      denoise: 1.0
+      denoise_smoothing: 0.0
+      diffusion: 0.0
+      estimator: 1.0
+      estimator_confidence: 0.0
+      estimator_norm: 0.0
+      integrate_pos: 0.0
+      latent_anisotrophy: 0.0
+      latent_isotrophy: 0.0
+      latent_norm: 0.0
+      latent_norm_mse: 0.0
+      payload: 0.0
+      pred_C: 0.0
+      pred_J: 0.0
+      pred_M: 0.0
+      prediction: 0.0
+      prediction_confidence: 1.0
+      regularisation: 0.0
+      smoothing: 0.0
+      smoothing_confidence: 0.0
+    confidence_log_var_clamping:
+    - -8.0
+    - 3.0
+    confidence_per_feature: true
+    contrastive_style: linear
+    contrastive_temp: 0.1
+    default_noise_std: 0.02
+    denoiser:
+      _target_: agents.latent_predictor.AttentionDenoiser
+      device: cuda
+      dropout: 0.1
+      hidden_dim: 64
+      input_dim: ???
+      learnable_pos_encoding: true
+      num_heads: 4
+      num_layers: 2
+      pos_encoding: true
+    detach_estimated_latents_before_mix: true
+    device: cuda
+    encoder:
+      _target_: agents.latent_predictor.SimplePrivilegedEncoder
+      activation_fn: elu
+      device: cuda
+      dropout_prob: 0.0
+      hidden_dim: 64
+      hidden_layers: 2
+      input_dim: 7
+      latent_dim: 7
+      use_layernorm: false
+    estimator:
+      _target_: agents.latent_predictor.LargeCNNEstimator
+      activation_fn: elu
+      base_channels: 64
+      channel_multiplier: 1.5
+      device: cuda
+      dropout_prob: 0.3
+      input_dim: ???
+      layer_configs: null
+      num_layers: 5
+      output_dim: ???
+      timestep_dim: 64
+    estimator_update_rate: 4
+    from_sim_priv_info_indexes:
+    - 0
+    - 10
+    - 11
+    - 12
+    - 13
+    - 14
+    - 15
+    learning_rate_denoiser: 0.001
+    learning_rate_encoder: 0.001
+    learning_rate_estimator: 1.0e-05
+    learning_rate_predictor: 0.001
+    loss_fn: MSE
+    max_grad_norm: 1.0
+    mini_batch_size: 256
+    mix_estimated_latents_elementwise: true
+    multivariate_uncertainty: false
+    new_indexes: true
+    noise_params:
+      action:
+        alpha_range:
+        - 0.1
+        - 0.9
+        enable_fixed_readings: true
+        enable_gaussian_ou: true
+        enable_offset: false
+        enable_spikes: false
+        fixed_reading_identical: true
+        fixed_reading_max_duration: 50
+        individualised_noise_std_range:
+        - 0.0
+        - 1.0
+        offset_scale: 4.0
+        ou_dt: 0.05
+        ou_theta: 15.0
+        p_fixed: 0.01
+        p_offset: 0.25
+        set_noise_per_batch: true
+        set_noise_per_feature: true
+        set_noise_per_timestep: false
+        std_scaling: 1.0
+      master_std_range:
+      - 0.25
+      - 1.0
+      master_std_scaling:
+      - - 1.0
+        - 2.0
+      - - 0
+        - 300
+      priv_info:
+        alpha_range:
+        - 0.1
+        - 0.9
+        enable_fixed_readings: false
+        enable_gaussian_ou: true
+        enable_offset: false
+        enable_spikes: false
+        individualised_noise_std_range:
+        - 0.0
+        - 1.0
+        ou_dt: 0.05
+        ou_theta: 15.0
+        set_noise_per_batch: true
+        set_noise_per_feature: true
+        set_noise_per_timestep: false
+        std_scaling: 1.0
+      qpos_qvel:
+        alpha_range:
+        - 0.1
+        - 0.9
+        corr_rho:
+        - 0.5
+        - 1.0
+        differential_dt: 0.05
+        differential_noise_range:
+        - 0.0
+        - 1.0
+        enable_fixed_readings: true
+        enable_gaussian_ou: true
+        enable_offset: true
+        enable_spikes: true
+        fixed_reading_identical: true
+        fixed_reading_max_duration: 10
+        individualised_noise_std_range:
+        - 0.0
+        - 1.0
+        offset_scale: 1.0
+        ou_dt: 0.05
+        ou_theta: 15.0
+        p_fixed: 0.01
+        p_offset: 0.25
+        p_spike: 0.01
+        set_noise_per_batch: true
+        set_noise_per_feature: true
+        set_noise_per_timestep: false
+        spike_magnitude_mean: 10.0
+        spike_magnitude_std: 2.5
+        spike_max_duration: 10
+        std_scaling: 1.0
+    noise_std_SI_action:
+    - 0.0398
+    - 0.0378
+    - 0.0309
+    noise_std_SI_priv_info: 0.1
+    noise_std_SI_qpos:
+    - 0.0212
+    - 0.0125
+    - 0.0729
+    - 0.0821
+    - 0.037
+    - 0.0364
+    - 0.0348
+    noise_std_SI_qvel:
+    - 0.0175
+    - 0.0081
+    - 0.2811
+    - 0.2102
+    - 0.0369
+    - 0.039
+    - 0.0398
+    num_actions: 3
+    num_hist_timesteps_to_use: null
+    num_joint_angles: 7
+    num_latent_encoding: 7
+    num_privileged_obs: 7
+    num_timesteps_estimator: 64
+    num_timesteps_predictor: 16
+    num_use_each_datapoint: 0.5
+    predict_acceleration: false
+    predict_delta: true
+    predict_qpos: true
+    predict_qvel: true
+    prediction_horizon: 30
+    prediction_timesteps: 10
+    predictor:
+      _target_: agents.latent_predictor.AttentionPredictor2
+      device: cuda
+      dropout: 0.3
+      hidden_dim: 96
+      input_dim: ???
+      learnable_pos_encoding: true
+      num_heads: 8
+      num_joint_angles: 7
+      num_layers: 4
+      physics_timestep: 0.05
+      pooling_method: mean
+      pos_encoding: true
+      predict_acceleration: false
+      predict_delta: true
+      predict_qpos: true
+      predict_qvel: true
+      prediction_timesteps: 10
+      use_normalisation: true
+    predictor_gets_confidence: false
+    seperate_estimator_obs: true
+    taper_horizon_loss_to: 0.0
+    target_latent_norm: 0.5
+    train_with_estimated_latents: false
+    train_with_estimated_latents_chance:
+    - - 0
+      - 0.5
+    - - 0
+      - 200
+    use_edl_confidence: false
+    use_estimator_confidence: false
+    use_full_observation: true
+    use_gt_chance: 0.2
+    use_mini_batch_sampling: true
+    use_noise: true
+    use_normalisation: true
+    use_predictor_confidence: true
+    weight_decay: 0.0001
+    zero_qvel_input: false
+  noise_priv_info_std: 0.0
+  noise_qpos_std: 0.0
+  noise_qvel_std: 0.0
+  num_env_steps_per_update: 2000
+  num_envs: 4096
+  operator:
+    _target_: agents.mixed_action.MixedOperatorAgent
+    action_curriculum_len: null
+    auto_reset_after: null
+    mix_within_envs: true
+    noise_std: 0.02
+    num_envs: 4096
+    operators:
+    - frac: 0.65
+      max_amp: 1.2
+      max_ramp_step: 15
+      max_steps_per_action: 25
+      min_amp: 0.8
+      min_ramp_step: 1
+      min_steps_per_action: 1
+      name: rand
+      ramp_mode: true
+    - frac: 0.2
+      max_amp: 1.0
+      min_amp: 0.0
+      name: rand_walk
+      theta: 0.1
+      walk_noise_std: 0.2
+    - frac: 0.1
+      max_amp: 1.0
+      max_freq: 300
+      min_amp: 0.0
+      min_freq: 50
+      name: sin
+      start_at_zero: true
+    - frac: 0.05
+      name: no_motion
+  save_data_folder: dataset
+  save_data_mode: numpy
+  save_to_dataset: false
+  seed: 106
+  use_full_observation: true
+model_seed: 106
+run_name: run
+savedir: run
+seed: 106
+time:
+  day: '15'
+  hr: '00'
+  min: '14'
+  month: '01'
+  sec: '39'
+  year: '2026'
+trainer:
+  _target_: trainers.physmop_trainer.PhysmopTrainer
+  debug: false
+  device: cuda
+  enable_saving: true
+  num_episodes: 500
+  rerandomise_within_episode: null
+  save_freq: 25
+  savedir: run
+  test_freq: 25
+  use_dataset: true
+  use_evaluator: true
+wandb:
+  job_type: train
+  name: attention_roa_prob 01-15/00-14-39
+  project: luke-mp

@@ -1,7 +1,6 @@
 # generated data, training runs and downloaded checkpoints
 data/sim/
 outputs/
-checkpoints/
 wandb/
 
 # python

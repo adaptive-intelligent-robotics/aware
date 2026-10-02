@@ -28,12 +28,13 @@ JAX and PyTorch wheels bundle CUDA, so the host only needs an NVIDIA driver and 
 
 ```bash
 docker build -t aware .
-docker run --gpus all -it \
+mkdir -p outputs checkpoints
+docker run --gpus all -it -u $(id -u):$(id -g) \
   -v $PWD/data:/app/data -v $PWD/outputs:/app/outputs -v $PWD/checkpoints:/app/checkpoints \
   aware
 ```
 
-All commands below are run from the repository root, inside the container.
+All commands below are run from the repository root, inside the container. Running as your own user (`-u`) means generated data and outputs are owned by you, and is required when the repository is on an NFS mount, where the container's root user cannot write.
 
 ### Local
 

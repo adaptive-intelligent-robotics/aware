@@ -1,7 +1,8 @@
 # JAX and PyTorch wheels bundle CUDA, so the host only needs an NVIDIA driver and the
 # NVIDIA container toolkit. Build and run from the repository root:
 #   docker build -t aware .
-#   docker run --gpus all -v $PWD/data:/app/data -v $PWD/outputs:/app/outputs aware \
+#   docker run --gpus all -u $(id -u):$(id -g) -v $PWD/data:/app/data \
+#     -v $PWD/outputs:/app/outputs -v $PWD/checkpoints:/app/checkpoints aware \
 #     python scripts/evaluate.py checkpoint=checkpoints/rssm_aware_seed1
 FROM python:3.10-slim-bookworm
 
@@ -18,7 +19,8 @@ ENV UV_PROJECT_ENVIRONMENT=/opt/venv \
     PATH=/opt/venv/bin:$PATH \
     MUJOCO_GL=egl \
     XLA_PYTHON_CLIENT_PREALLOCATE=false \
-    MPLCONFIGDIR=/tmp/matplotlib
+    MPLCONFIGDIR=/tmp/matplotlib \
+    HOME=/tmp
 
 WORKDIR /app
 
@@ -30,4 +32,7 @@ RUN uv sync --frozen --no-install-project
 COPY . .
 RUN uv sync --frozen
 
+# lets entrypoint.sh register the user the container is run as
+RUN chmod a+w /etc/passwd
+ENTRYPOINT ["/app/entrypoint.sh"]
 CMD ["bash"]
