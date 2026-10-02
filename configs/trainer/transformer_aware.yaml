@@ -1,0 +1,9 @@
+# trains from the generated dataset, one episode = one data file
+_target_: aware.trainers.transformer_trainer.TransformerTrainer
+num_episodes: 500
+test_freq: 25
+save_freq: 25
+enable_saving: true
+use_evaluator: true
+debug: false
+savedir: ${savedir}

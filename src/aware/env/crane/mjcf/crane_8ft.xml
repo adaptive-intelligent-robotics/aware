@@ -1,0 +1,147 @@
+<mujoco>
+  <!-- <option integrator="implicitfast" jacobian="sparse" solver="PGS" tolerance="1e5" >
+    <flag energy="enable" warmstart="disable"/>
+  </option> -->
+
+  <!-- if jacobian != sparse, qM (mass matrix) is dense, ie with n_q=7, if jacobian
+       is sparse, qM.shape = [28] ((7 * 8) / 2), otherwise it is [7, 7]. Currently,
+       regress_components=True requires jacobian = sparse, and shape = [28] -->
+
+  <!-- <option integrator="implicitfast" jacobian="sparse"> -->
+  <option integrator="implicitfast">
+    <flag warmstart="enable" contact="disable"/>
+  </option>
+  <compiler autolimits="true" angle="radian"/>
+
+  <visual>
+    <global offwidth="1920"
+            offheight="1080"/>
+  </visual>
+
+  <worldbody>
+    <light diffuse="0.75 0.75 0.75" pos="0 0 10" dir="0 0 -1"/>
+
+    <body name="floor" pos="0 0 1e-6" >
+    <geom type="plane" size="15 15 0.1" rgba="0.7 0.7 0.6 0.3"/>
+
+    <!-- MPT-50 is represented by base and cab bodies. Total weight is 13.8Kg -->
+    <!-- motion platform height: 0.53m, base_geom half height = 0.042. base z = 0.53+0.042  = 0.0572 -->
+    <body name="base" pos="0 0 0.572" euler="0 0 0">
+      <geom name="base_geom"  type="cylinder" size="0.054 0.042 " rgba="0.8 0.6 0.4 1.0" mass="0.0"
+            contype="0" conaffinity="0"/> <!-- mass was 6.0 -->
+      <inertial mass="6.0" pos="0 0 0" diaginertia="0.007902 0.007902 0.008748"/>
+
+      <!-- height of the centre point of the cab is at the middle point where the hoist cable is connected to the cab -->
+      <!-- which is at 184mm/2 + 84mm/2 above the centre of the base_geom-->
+      <body name="cab" pos="0 0 0.07">
+        <geom name="cab_geom" type="box" size="0.100 0.128 0.092" rgba="0.8 0.6 0.4 1.0" mass="0.0"
+              contype="0" conaffinity="0"/> <!-- mass was 7.8 -->
+        <inertial mass="7.8" pos="0 0 0" diaginertia="0.064605 0.047906 0.068598"/>
+
+        <!-- z-pos of slew-joint is at the height where base_geom and cab_geom are connected -->
+        <joint name="slew-joint" type="hinge" axis="0 0 1" pos="0 0 0" limited="true" 
+               range="-1.3 1.3" armature="30.0"/>
+
+        <!-- boom rear section is 26.5cm behind the centre of the cab mounting plate, i.e. boom half-length-26.5cm -->
+        <!-- boom z-pos = 14cm above centre of the cab (luff actuator) + half-height of boom -->
+        <body name="boom" pos="1.0367 0 0.179">
+          <!-- total length of boom = 8ft + extension from front pulley module (7.5cm) and rear hoist module (9cm) -->
+          <geom name="boom_geom" type="box" size="1.3017 0.039 0.039" rgba="0.3 0.3 0.3 1.0" mass="0.0"
+                contype="0" conaffinity="0"/> <!-- mass was 0.0 -->
+          <!-- <inertial mass="1.834" pos="0 0 0" diaginertia="0.001861 1.039148 1.039148"/> -->
+          <geom name="front_pulley_geom" pos="1.3017 0 0" type="sphere" size="0.04" 
+                rgba="0 0.5 0.5 0" mass="0.0"/> <!-- mass was 0.38 -->
+          <!-- <inertial mass="0.380" pos="1.3017 0 0" diaginertia="0.0002432 0.0002432 0.0002432"/> -->
+
+          <!-- combined inertia of the boom_geom and the front_pulley_geom -->
+          <inertial mass="2.214" pos="0.223417 0 0" diaginertia="0.0021042 1.5727772 1.5727772"/>
+
+          <!-- 18cm of the CF-boom section is behind the luff-joint. so 1-ft in cm - 0.18 -->
+          <!-- correct luff joint to the centre point of the cab measured from the mid-point of boom -->
+          <joint name="luff-joint" type="hinge" pos="-1.0392 0 -0.179" axis="0 -1 0" 
+                 range="0.001 1.2" limited="true" armature="1200.0"
+                 frictionloss="80"/> <!-- 80Nm of torque ((2.2kg * 0.22m) + (3kg * 2.5m) * 10x)-->
+
+          <body name="boom_tip" pos="1.3017 0 -0.039">
+            <geom name="boom_tip_geom" pos="0 0 0" type="sphere" size="0.01" rgba="0.3 0.3 0.3 0" />
+            <site name="b_tip" pos="0 0 0" rgba="1 0 0 0" size="0.01" />
+
+            <joint name="boom-tip-beta-hinge" type="hinge" axis="1 0 0" limited="true" 
+                   range="-1.5 1.5" damping="1e-2" armature="1e-4"/>
+            <joint name="boom-tip-phi-hinge" type="hinge" axis="0 1 0" limited="true"
+                   range="-1.5 1.5" damping="1e-2" armature="1e-4"/> 
+            <joint name="hoist-slider" type="slide" axis="0 0 -1" limited="true" 
+                   range="0.07 2.5" ref="1.0" armature="150.0"
+                   frictionloss="30"/> <!-- 30N/3kg of friction to prevent payload motion when still -->
+
+            <body name="payload_tip" pos="0 0 -1.0">
+              <geom name="p_tip_geom" type="sphere" size=".02" rgba="1 1 0 0" mass="0.0"
+                    contype="0" conaffinity="0"/> <!-- mass was 0.01 -->
+              <inertial mass="0.01" pos="0 0 0" diaginertia="0.0000016 0.0000016 0.0000016"/>
+
+              <site name="p_tip" pos="0 0 0" size="0.01"/>
+              <joint name="p-tip-eta-hinge" type="hinge" axis="1 0 0" damping="1e-2"
+                     limited="true" range="-1.5 1.5" armature="1e-4"/>
+              <joint name="p-tip-sigma-hinge" type="hinge" axis="0 1 0" damping="1e-2"
+                     limited="true" range="-1.5 1.5" armature="1e-4"/> 
+
+                <body name="payload" pos="0 0 0">
+                  <geom name="payload_geom" pos="0 0 -0.13" type="box" 
+                        size="0.0135 0.0135 0.13" rgba="0.8 0.8 0.8 1" mass="0.0"
+                        contype="0" conaffinity="0"/> <!-- mass was 0.2 -->
+                  <inertial mass="0.2" pos="0 0 -0.13" diaginertia="0.0011388 0.0011388 0.0000243"/>
+                  <site name="p_cg" pos="0 0 -0.13"/>
+
+                </body> <!-- payload -->
+              </body> <!-- payload tip -->
+            </body> <!-- boom tip -->
+          </body> <!-- boom -->
+        </body> <!-- cab -->
+      </body> <!-- base -->
+    </body> <!-- floor -->
+
+    <!-- visualisation for the target position to move the payload to -->
+    <!-- disabled currently, alpha set to 0.0 -->
+    <body name="target" mocap="true" pos="0 0 0">
+      <geom name="target_geom" type="sphere" size="0.15" rgba="1 0.7 0 0.0" 
+            contype="0" conaffinity="0"/>
+      <site name="target_marker" pos="0 0 0"/>
+    </body>
+
+  </worldbody>
+
+<actuator>
+
+  <!-- Pareton turnings 5th Jun 25-->
+  <!-- <velocity name="slew-velocity" joint="slew-joint" ctrlrange="-0.7854 0.7854" kv="3000.0"/>
+  <velocity name="luff-velocity" joint="luff-joint" ctrlrange="-0.2618 0.2618" kv="14020.0"/>
+  <velocity name="hoist-velocity" joint="hoist-slider" ctrlrange="-0.8 0.8" kv="586.0"/> -->
+
+  <!-- tunings Luke 24th Jul 25 (adjusted joint params above too)-->
+  <velocity name="slew-velocity" joint="slew-joint" ctrlrange="-0.9 0.9" kv="400.0"/>
+  <velocity name="luff-velocity" joint="luff-joint" ctrlrange="-0.48 0.48" kv="20000.0"/>
+  <velocity name="hoist-velocity" joint="hoist-slider" ctrlrange="-1.33 1.33" kv="2000.0"/>
+
+</actuator>
+
+  <sensor>
+
+    <!-- Oscars sensors -->
+    <jointactuatorfrc name="slew_joint_frc" joint="slew-joint" />
+    <jointactuatorfrc name="luff_joint_frc" joint="luff-joint" />
+    <actuatorfrc name="slew_act_frc" actuator="slew-velocity" />
+    <actuatorfrc name="luff_act_frc" actuator="luff-velocity" />
+    <actuatorvel name="slew_act_vel" actuator="slew-velocity" />
+    <actuatorvel name="luff_act_vel" actuator="luff-velocity" />
+
+    <!-- my sensors -->
+    <framepos name="payload_position" objtype="site" objname="p_cg" />
+    <framequat name="payload_orientation" objtype="site" objname="p_cg" />
+    <framelinvel name="payload_linear_velocity" objtype="site" objname="p_cg" />
+    <frameangvel name="payload_angular_velocity" objtype="site" objname="p_cg" />
+    <framelinacc name="payload_linear_acceleration" objtype="site" objname="p_cg" />
+    <framepos name="boom_tip_position" objtype="site" objname="b_tip" />
+
+  </sensor>
+
+</mujoco>

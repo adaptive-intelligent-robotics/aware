@@ -1,0 +1,18 @@
+# Evaluate anomaly detection of a trained model on the released crane dataset
+#   python scripts/evaluate.py checkpoint=outputs/<date>/<time> id=150
+
+defaults:
+  - _self_
+  - override hydra/job_logging: stdout
+
+checkpoint: ???                 # run folder created by scripts/train.py
+id: null                        # checkpoint number to load, null loads the most recent
+name: null                      # name in the results table, defaults to the run folder
+datasets: [high_noise, low_noise]
+device: cuda
+output: outputs/evaluation/${now:%Y-%m-%d_%H-%M-%S}.txt
+
+hydra:
+  run:
+    dir: .
+  output_subdir: null

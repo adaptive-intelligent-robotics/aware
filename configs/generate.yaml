@@ -1,0 +1,34 @@
+# Generate a training dataset in the domain randomised crane simulation
+#   python scripts/generate_data.py num_episodes=10
+# Data is saved to data/sim/<date>/<time>, with one file per episode of 2000 steps.
+# With 4096 environments each file is ~3.2GB, the paper used 448 files (~1.3TB).
+
+defaults:
+  - env: crane
+  # the Transformer AWARE agent defines the observation layout, stores the data and holds
+  # the operator which drives the crane, its network is not trained during generation
+  - model: transformer_aware
+  - _self_ # values below override the model config
+  - override hydra/job_logging: stdout
+
+num_episodes: 500
+rerandomise_within_episode: 513 # resample the domain randomisation every N steps
+seed: 100
+device: cuda
+dataset_path: null
+
+model:
+  num_envs: ${env.num_envs}
+  num_env_steps_per_update: 2000
+  load_from_dataset: false
+  save_to_dataset: true
+  save_data_folder: data/sim
+  network:
+    use_normalisation: false
+  operator:
+    num_envs: ${env.num_envs}
+
+hydra:
+  run:
+    dir: .
+  output_subdir: null

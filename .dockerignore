@@ -1,0 +1,8 @@
+.git
+outputs/
+checkpoints/
+data/sim/
+wandb/
+**/__pycache__
+*.egg-info
+.venv

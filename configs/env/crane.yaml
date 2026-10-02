@@ -1,0 +1,72 @@
+# domain randomised crane simulation, as used to generate the paper training dataset
+_target_: aware.env.mjx.MJXEnv
+cfg_override_groups: null
+debug_jit: false
+debug_nans: true
+domain_randomise: true
+enable_rendering: false
+env_args:
+  acceleration_normalisation: 0.5
+  action_clip_range: 1
+  action_mag_normalisation: 2.0
+  action_penalty_scale: 0.2
+  action_penalty_threshold: 0.5
+  action_repeat: 1
+  action_scale_ctrlrange_frac: 0.25
+  actuator_max_scaling: 0.0
+  clip_actions: true
+  com_max_move: 0.0
+  ctrl_dt: 0.05
+  distance_normalisation: 2.0
+  episode_length: 2000
+  joystick_target: true
+  joystick_target_max_step: 0.002
+  mass_max_scaling: 0.0
+  max_armature_scale: 2.0
+  max_ctrlrange_scale: 1.5
+  max_gear_ratio: 1.0
+  min_armature_scale: 0.1
+  min_ctrlrange_scale: 0.5
+  min_gear_ratio: 1.0
+  mp_all_off_chance: 0.2
+  mp_each_off_chance: 0.2
+  mp_max_cycle_time: 12
+  mp_max_pos_amplitude: 0.2
+  mp_max_pos_noise: 0.0
+  mp_max_rot_amplitude: 0.2
+  mp_max_rot_noise: 0.0
+  mp_min_cycle_time: 6
+  num_required_within_threshold: 50
+  payload_max_inertial_length: 0.2
+  payload_max_mass: 2.0
+  payload_min_inertial_length: 0.2
+  payload_min_mass: 0.1
+  penalise_action_mag: false
+  relative_actions: false
+  reset_noise_scale: 0.0
+  roa_action_in_obs: false
+  roa_n_privileged_info: 7
+  roa_n_proprioceptive: 17
+  roa_n_timesteps_history: 10
+  scale_actions: true
+  seed: ${seed}
+  sim_dt: 0.005
+  target_move_chance: 0.002
+  target_threshold: 0.1
+  threshold_termination: false
+  use_action_change_mag: true
+  use_dreamer: false
+  use_motion_platform: false
+  use_roa: false
+  vision: false
+  xml_motion_platform: crane_with_base.xml
+  xml_name: crane_8ft.xml
+fk_only: false
+name: Crane
+num_envs: 4096
+render_all_environments: false
+rerandomise_rate: 1
+rngseed: ${seed}
+structured_randomisation: false
+structured_repeats: null
+torch: true

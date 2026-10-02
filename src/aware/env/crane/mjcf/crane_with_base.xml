@@ -1,0 +1,173 @@
+<mujoco>
+  <!-- <option integrator="implicitfast" jacobian="sparse" solver="PGS" tolerance="1e5" >
+    <flag energy="enable" warmstart="disable"/>
+  </option> -->
+  <option integrator="implicitfast" jacobian="sparse" solver="CG" tolerance="1e-5" >
+    <flag warmstart="disable"/>
+  </option>
+  <compiler autolimits="true" angle="radian"/>
+  <visual>
+    <global offwidth="1920"
+            offheight="1080"/>
+  </visual>
+
+  <worldbody>
+
+    <light diffuse=".75 0.75 0.75" pos="0 0 10" dir="0 0 -1"/>
+    <geom type="plane" size="5 5 0.1" rgba="0.7 0.7 0.6 1"/>
+    <body name="floor" pos="0 0 0.00000001" >
+    
+    <body name="reference_base" pos="0 0 1">
+
+      <!-- 6DoF sliders added -->
+      <joint name="z_slide_joint" type="slide" axis="0 0 1" limited="true" range="-1 1"/>    
+      <joint name="y_slide_joint" type="slide" axis="0 1 0" limited="true" range="-4 4"/>
+      <joint name="x_slide_joint" type="slide" axis="1 0 0" limited="true" range="-4 4"/>
+      <geom name="slider_indicator" type="sphere" size="0.05" pos="0 0 0.05" rgba="1 0.5 0 0.7"/>
+      <joint name="base_x_rot_joint" type="hinge" axis="1 0 0" limited="false" range="-0.52 0.52"/>
+      <joint name="base_y_rot_joint" type="hinge" axis="0 1 0" limited="false" range="-0.52 0.52"/>
+      <joint name="base_z_rot_joint" type="hinge" axis="0 0 1" limited="false" range="-0.52 0.52"/>
+
+      <body name="base" pos="0 0 0.285" euler="0 0 0" gravcomp="0">
+        <body name="cab" pos="0 0 0.464" gravcomp="0">
+          <joint name="slew-joint" type="hinge" axis="0 0 1" pos="0 0 -0.5" limited="true"
+                range="-1.3 1.3" armature="0.005" />
+          <!-- inertia values from MUJOCO, not real world -->
+          <inertial pos="0 0 0" mass="7.935" diaginertia="6.57e-2 4.88e-2 6.98e-2"/> 
+          <geom name="cab_geom" type="box" size="0.100 0.128 0.092" rgba="0.8 0.6 0.4 1"/>
+
+          <site name="cab_imu" pos="0 0 0" size="0.01" />
+  
+          <body name="boom" pos="0.41 0 0.18" gravcomp="0">
+            <!-- 0.18 = 14cm from luff actuator to top of the cab mount plate + half boom height-->
+            <joint name="luff-joint" type="hinge" pos="-0.41 0 -0.18" axis="0 -1 0"
+                  range="0.001 1.2" limited="true" armature="0.005" />
+            <!-- inertia values from MUJOCO, not real world -->
+            <inertial pos="0 0 0" mass="5.777" diaginertia="5.65e-3 9.74e-1 9.74e-1"/>
+            <geom name="boom_geom" type="box" size="0.71 0.0383 0.0383" rgba="0.3 0.3 0.3 1" 
+                  contype="0" conaffinity="0"/>
+            
+            <site name="boom_imu" pos="0 0 0" size="0.01" />
+
+            <site name="b_tip" pos="0.71 0 -0.038" rgba="1 0 0 1" size="0.01" />
+            <body name="boom_tip" pos="0.71 0 -0.038">
+              <!-- arbitrary mass/inertia, not too small to avoid instability -->
+              <inertial pos="0 0 0" mass="0.01" diaginertia="0.001 0.001 0.001"/> 
+              <joint name="boom-tip-beta-hinge" type="hinge" axis="1 0 0" damping="0.01" 
+                    limited="true" range="-1.5 1.5"/>
+              <joint name="boom-tip-phi-hinge" type="hinge" axis="0 1 0" damping="0.01" 
+                    limited="true" range="-1.5 1.5"/> 
+              <joint name="hoist-slider" type="slide" axis="0 0 -1" limited="true" 
+                    range="0.1 1.0" ref="0.2" armature="0.00032"/>
+
+              <body name="payload_tip" pos="0 0 -0.4">
+                <!-- arbitrary mass/inertia, not too small to avoid instability -->
+                <inertial pos="0 0 0" mass="0.01" diaginertia="0.001 0.001 0.001"/>
+                <geom name="p_tip_geom" type="sphere" size="0.02" rgba="1 1 0 1" 
+                      contype="0" conaffinity="0"/>
+                <site name="p_tip" pos="0 0 0" size="0.01"/>
+                <joint name="p-tip-eta-hinge" type="hinge" axis="1 0 0" damping="0.0001"
+                      limited="true" range="-1.5 1.5"/>
+                <joint name="p-tip-sigma-hinge" type="hinge" axis="0 1 0" damping="0.0001"
+                      limited="true" range="-1.5 1.5"/> 
+
+                  <body name="payload" pos="0 0 0">
+                    <!-- inertia values from MUJOCO, not real world -->
+                    <inertial pos="0 0 -0.13" mass="0.2" diaginertia="1.14e-3 1.14e-3 2.43e-5"/>
+                    <geom name="payload_geom" pos="0 0 -0.13" type="box" size="0.0135 0.0135 0.13" 
+                          rgba="0.8 0.8 0.8 1" contype="0" conaffinity="0"/>
+                    <site name="p_cg" pos="0 0 -0.13"/>
+                  </body> <!-- payload -->
+
+                </body> <!-- payload tip-->
+              </body> <!-- boom tip-->
+            </body> <!-- boom -->
+          </body> <!-- cab -->
+        </body> <!-- base -->
+      </body> <!-- reference base -->
+    </body> <!-- floor -->
+
+              
+    <!-- I need this vicon mocap body here as a place holder for the task parameters in mjpc-->
+    <body name="vicon" mocap="true" pos="1.12 0. 0.706">
+      <geom name="vicon_geom" type="sphere" size="0.015" rgba="1 0.7 0 1" 
+            contype="0" conaffinity="0"/>
+      <site name="vicon_marker" pos="0 0 0"/>
+    </body>
+
+    <!-- visualisation for the target position to move the payload to -->
+    <body name="target" mocap="true" pos="0 0 0">
+      <geom name="target_geom" type="sphere" size="0.15" rgba="1 0.7 0 0.5" 
+            contype="0" conaffinity="0"/>
+      <site name="target_marker" pos="0 0 0"/>
+    </body>
+
+  </worldbody>
+
+  <!-- <contact>
+        <exclude name="boom_hit_cab_in_luff" body1="cab" body2="boom"/>
+        <exclude name="payload_boom" body1="payload" body2="boom"/>
+        <exclude name="floor_payload" body1="floor" body2="payload"/>
+        <exclude name="vicon_payload" body1="vicon" body2="payload"/>
+        <exclude name="vicon_p_tip" body1="vicon" body2="payload_tip"/> 
+  </contact> -->
+
+<actuator>
+  
+  <!-- 6DoF base actautors -->
+  <position name="base_x_pos" joint="x_slide_joint" kp="5000" kv="1000" ctrlrange="-1 1" forcerange="-1000 1000"/>
+  <position name="base_y_pos" joint="y_slide_joint" kp="5000" kv="1000" ctrlrange="-1 1" forcerange="-1000 1000"/>
+  <position name="base_z_pos" joint="z_slide_joint" kp="5000" kv="1000" ctrlrange="-1 1" forcerange="-1000 1000"/>
+  <position name="base_x_rot" joint="base_x_rot_joint" kp="1000" kv="100" ctrlrange="-0.52 0.52" forcerange="-1000 1000"/>
+  <position name="base_y_rot" joint="base_y_rot_joint" kp="1000" kv="100" ctrlrange="-0.52 0.52" forcerange="-1000 1000"/>
+  <position name="base_z_rot" joint="base_z_rot_joint" kp="1000" kv="100" ctrlrange="-0.52 0.52" forcerange="-1000 1000"/>
+
+  <!-- main crane actuators -->
+  <velocity name="slew-velocity" joint="slew-joint" kv="0.0006385" gear="100" 
+            forcerange="-68 68" ctrlrange="-120 120" />
+  <velocity name="luff-velocity" joint="luff-joint" kv="0.11" gear="200"
+           forcerange="-68 68" ctrlrange="-105 105"/>
+  <velocity name="hoist-velocity" joint="hoist-slider" kv="2500" 
+            ctrlrange="-0.295 0.295" lengthrange="0.1 1.0"/>
+  
+</actuator>
+
+  <sensor>
+    <!-- Oscars sensors -->
+    <jointactuatorfrc name="slew_joint_frc" joint="slew-joint" />
+    <jointactuatorfrc name="luff_joint_frc" joint="luff-joint" />
+    <actuatorfrc name="slew_act_frc" actuator="slew-velocity" />
+    <actuatorfrc name="luff_act_frc" actuator="luff-velocity" />
+    <actuatorvel name="slew_act_vel" actuator="slew-velocity" />
+    <actuatorvel name="luff_act_vel" actuator="luff-velocity" />
+    <framelinvel name="payload_velocity" objtype="site" objname="p_cg" />
+    <framequat name="cab_angular_orientation" objtype="site" objname="cab_imu" />
+    <frameangvel name="cab_angular_velocity" objtype="site" objname="cab_imu" />
+    <framequat name="boom_angular_orientation" objtype="site" objname="boom_imu" />
+    <frameangvel name="boom_angular_velocity" objtype="site" objname="boom_imu" />
+
+    <!-- my sensors -->
+    <framepos name="payload_position" objtype="site" objname="p_cg" />
+    <framequat name="payload_orientation" objtype="site" objname="p_cg" />
+    <framelinvel name="payload_linear_velocity" objtype="site" objname="p_cg" />
+    <frameangvel name="payload_angular_velocity" objtype="site" objname="p_cg" />
+    <framelinacc name="payload_linear_acceleration" objtype="site" objname="p_cg" />
+    <framepos name="boom_tip_position" objtype="site" objname="b_tip" />
+
+    <!-- Base position -->
+    <!-- <framepos name="base_position" objtype="xbody" objname="base" reftype="xbody" refname="reference_base" />
+    <framequat name="base_orientation" objtype="xbody" objname="base" reftype="xbody" refname="reference_base" /> -->
+    <framepos name="reference_base_position" objtype="xbody" objname="reference_base" />
+    <framelinvel name="base_linear_velocity" objtype="xbody" objname="base" reftype="xbody" refname="reference_base" />
+
+    <!-- swap for these global measurements -->
+    <framepos name="base_position" objtype="xbody" objname="base" />
+    <framequat name="base_orientation" objtype="xbody" objname="base" />
+
+    <!-- Relative payload position and vel, to base -->
+    <framepos name="payload_position_base" objtype="site" objname="p_cg" reftype="xbody" refname="base" />
+    <framelinvel name="payload_linear_velocity_base" objtype="site" objname="p_cg" reftype="xbody" refname="base" />
+
+  </sensor>
+
+</mujoco>

@@ -1,0 +1,275 @@
+# RSSM AWARE, as trained for the paper
+_target_: aware.agents.rssm_roa.RSSM_ROA
+act_dim: 3
+act_mode: default
+agent:
+  ac_grads: false
+  autoregressive_training:
+    enable: false
+    full: false
+    num_steps: 20
+    one_batch: false
+    only_last: true
+    scale: 0.33
+    split: false
+    split_step: 50000
+    step: 50000
+  dec:
+    simple:
+      act: silu
+      bspace: 8
+      depth: 4
+      kernel: 5
+      layers: 3
+      mults: [2, 3, 4, 4]
+      norm: rms
+      outer: false
+      output_loss: symlog_mae
+      outscale: 1.0
+      strided: false
+      symlog: true
+      units: 64
+      winit: trunc_normal_in
+    typ: simple
+  dyn:
+    rssm:
+      absolute: false
+      act: silu
+      blocks: 8
+      classes: 4
+      deter: 512
+      discrete_state: true
+      dynlayers: 1
+      free_nats: 1.0
+      hidden: 64
+      imglayers: 2
+      norm: rms
+      obslayers: 1
+      outscale: 1.0
+      posterior_dropout_p: 0.0
+      prior_dropout_p: 0.0
+      stoch: 32
+      unimix: 0.01
+      winit: trunc_normal_in
+    typ: rssm
+  enc:
+    simple:
+      act: silu
+      depth: 4
+      kernel: 5
+      layers: 3
+      mults: [2, 3, 4, 4]
+      norm: rms
+      outer: false
+      strided: false
+      symlog: true
+      units: 64
+      winit: trunc_normal_in
+    typ: simple
+  opt:
+    agc: 0.3
+    anneal: 0
+    beta1: 0.9
+    beta2: 0.999
+    decoder_anneal: 0
+    decoder_lr: 0.002
+    decoder_schedule: const
+    decoder_warmup: 1000
+    eps: 1.0e-20
+    estimator_anneal: 0
+    estimator_lr: 4.0e-07
+    estimator_schedule: const
+    estimator_warmup: 1000
+    lr: 4.0e-06
+    momentum: true
+    schedule: const
+    split_estimator_schedule: true
+    warmup: 1000
+    wd: 0.0
+  rwm_loss:
+    enable: false
+    rwm_rollout: 8
+    rwm_warmup: 32
+  state_masking:
+    enable: true
+    only_start: false
+    p: 0.001
+batch_length: 64
+dec_dim: null
+fk_regularizing: false
+loss_scales:
+  dyn: 1.0
+  rep: 0.1
+  roa_est: 2.1
+  roa_priv_recon: 0.21
+  roa_reg: 0.0
+  vector_pos: 0.5
+  vector_vel: 0.5
+num_hist_timesteps_to_use: 64
+obs_dim: 14
+obs_mode: default
+online_training: false
+privileged_info_dim: 7
+replay_context: 1
+roa_settings:
+  anneal_reg_step: 10000000.0
+  anneal_reg_value: 0.0
+  cnn_estimator_cfg:
+    act: elu
+    cnn_layers_config:
+      l0:
+        depth: 32
+        kernel: 5
+        stride: 2
+      l1:
+        depth: 64
+        kernel: 5
+        stride: 2
+      l2:
+        depth: 128
+        kernel: 3
+        stride: 1
+      l3:
+        depth: 256
+        kernel: 3
+        stride: 1
+    symlog: true
+  confidence_log_var_clamping_max: 3
+  confidence_log_var_clamping_min: -8
+  decode_all_t: false
+  decoder: mlp_dec
+  enable: true
+  enc: mlp_enc
+  estimator: large_cnn_estimator
+  estimator_confidence_per_feature: false
+  estimator_steps: 64
+  large_cnn_estimator_cfg:
+    activation_fn: elu
+    base_channels: 64
+    channel_multiplier: 1.5
+    dropout_prob: 0.1
+    feature_dim: 17
+    layer_configs: null
+    num_layers: 5
+    output_dim: 7
+    timestep_dim: 64
+  latent_concat: act
+  mlp_dec_cfg:
+    act: elu
+    layers: 4
+    norm: none
+    output: symlog_mse
+    units: 64
+    winit: trunc_normal_in
+  mlp_enc_cfg:
+    act: elu
+    layers: 4
+    norm: none
+    symlog: true
+    units: 64
+  predictor_gets_confidence: false
+  priv_head_cfg:
+    act: silu
+    layers: 1
+    norm: rms
+    output: symlog_mse
+    outscale: 1.0
+    units: 32
+    winit: trunc_normal_in
+  privileged_latent_dim: 7
+  rnn_estimator_cfg:
+    gru_cfg:
+      bias: true
+      units: 384
+  rssm_estimator_cfg:
+    act_dim: 3
+    agent:
+      ac_grads: false
+      dec:
+        simple:
+          act: silu
+          bspace: 8
+          depth: 4
+          kernel: 5
+          layers: 3
+          mults: [2, 3, 4, 4]
+          norm: rms
+          outer: false
+          output_loss: symlog_mse
+          outscale: 1.0
+          strided: false
+          symlog: true
+          units: 32
+          winit: trunc_normal_in
+        typ: simple
+      dyn:
+        rssm:
+          absolute: false
+          act: silu
+          blocks: 8
+          classes: 4
+          deter: 512
+          discrete_state: true
+          dynlayers: 1
+          free_nats: 1.0
+          hidden: 32
+          imglayers: 2
+          norm: rms
+          obslayers: 1
+          outscale: 1.0
+          posterior_dropout_p: 0.0
+          prior_dropout_p: 0.0
+          stoch: 32
+          unimix: 0.01
+          winit: trunc_normal_in
+        typ: rssm
+      enc:
+        simple:
+          act: silu
+          depth: 4
+          kernel: 5
+          layers: 3
+          mults: [2, 3, 4, 4]
+          norm: rms
+          outer: false
+          strided: false
+          symlog: true
+          units: 32
+          winit: trunc_normal_in
+        typ: simple
+      opt:
+        agc: 0.3
+        anneal: 0
+        beta1: 0.9
+        beta2: 0.999
+        eps: 1.0e-20
+        lr: 4.0e-05
+        momentum: true
+        schedule: const
+        warmup: 1000
+        wd: 0.0
+      state_masking:
+        enable: false
+        only_start: true
+        p: 0.0
+    batch_length: 64
+    dec_dim: 7
+    loss_scales:
+      dyn: 1.0
+      reg_vector: 1.0
+      rep: 0.1
+      vector: 1.0
+    obs_dim: 14
+    online_training: false
+    privileged_info_dim: 0
+    replay_context: 1
+    seed: 123
+    use_privileged_info: false
+  timestep_weighting: null
+  train_with_estimated_latents: false
+  train_with_estimated_latents_max_p: 0.75
+  train_with_estimated_latents_max_step: 750000.0
+  use_estimator_confidence: false
+  warmup_length: 0
+seed: ${seed}
+use_privileged_info: true

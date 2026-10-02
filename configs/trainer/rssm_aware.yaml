@@ -1,0 +1,83 @@
+_target_: aware.trainers.rssm_trainer.RSSMTrainer
+dataset_path: ${dataset_path}
+save_dir: ${savedir}
+batch_size: 128
+batch_length: 64
+context_length: 64
+steps: 5000000
+num_epochs: 10
+eval_every: 50000
+noise_generator_cfg:
+  noise_action: true
+  noise_params:
+    action:
+      alpha_range: [0.1, 0.9]
+      enable_fixed_readings: true
+      enable_gaussian_ou: true
+      enable_offset: false
+      enable_spikes: false
+      fixed_reading_identical: true
+      fixed_reading_max_duration: 50
+      individualised_noise_std_range: [0.0, 1.0]
+      offset_scale: 4.0
+      ou_dt: 0.05
+      ou_theta: 15.0
+      p_fixed: 0.01
+      p_offset: 0.25
+      set_noise_per_batch: true
+      set_noise_per_feature: true
+      set_noise_per_timestep: false
+      std_scaling: 1.0
+    master_std_range: [0.25, 1.0]
+    master_std_scaling:
+    - [1.0, 2.0]
+    - [0, 300]
+    priv_info:
+      alpha_range: [0.1, 0.9]
+      enable_fixed_readings: false
+      enable_gaussian_ou: true
+      enable_offset: false
+      enable_spikes: false
+      individualised_noise_std_range: [0.0, 1.0]
+      ou_dt: 0.05
+      ou_theta: 15.0
+      set_noise_per_batch: true
+      set_noise_per_feature: true
+      set_noise_per_timestep: false
+      std_scaling: 1.0
+    qpos_qvel:
+      alpha_range: [0.1, 0.9]
+      corr_rho: [0.5, 1.0]
+      differential_dt: 0.05
+      differential_noise_range: [0.0, 1.0]
+      enable_fixed_readings: true
+      enable_gaussian_ou: true
+      enable_offset: true
+      enable_spikes: true
+      fixed_reading_identical: true
+      fixed_reading_max_duration: 10
+      individualised_noise_std_range: [0.0, 1.0]
+      offset_scale: 1.0
+      ou_dt: 0.05
+      ou_theta: 15.0
+      p_fixed: 0.01
+      p_offset: 0.25
+      p_spike: 0.01
+      set_noise_per_batch: true
+      set_noise_per_feature: true
+      set_noise_per_timestep: false
+      spike_magnitude_mean: 10.0
+      spike_magnitude_std: 2.5
+      spike_max_duration: 10
+      std_scaling: 1.0
+  noise_priv_info: true
+  noise_std_SI_action: [0.0398, 0.0378, 0.0309]
+  noise_std_SI_priv_info: 0.1
+  noise_std_SI_qpos: [0.0212, 0.0125, 0.0729, 0.0821, 0.037, 0.0364, 0.0348]
+  noise_std_SI_qvel: [0.0175, 0.0081, 0.2811, 0.2102, 0.0369, 0.039, 0.0398]
+  noise_vector: true
+use_noise_generator: true
+num_workers: 4
+prefetch_factor: 4
+debug: false
+skip: []

@@ -1,0 +1,10 @@
+# generated data, training runs and downloaded checkpoints
+data/sim/
+outputs/
+checkpoints/
+wandb/
+
+# python
+__pycache__/
+*.egg-info/
+.venv/
