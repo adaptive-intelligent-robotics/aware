@@ -443,9 +443,10 @@ class MJXEnv:
     self.enable_rendering = False
     self.states_to_render = []
 
-  def save_render(self, savedir, savename="mujoco", add_timestamp=True):
+  def save_render(self, savedir, savename="mujoco", add_timestamp=True, camera=None):
     """
-    Call render(), and then save the frames as a video at the given location.
+    Call render(), and then save the frames as a video at the given location. The camera
+    can be a camera name in the model, or a mujoco.MjvCamera.
     """
     if not self.enable_rendering:
       logger.warning(
@@ -456,7 +457,7 @@ class MJXEnv:
           "MJXEnv.save_render() warning: self.states_to_render is empty, render must be called after step(). Nothing saved.")
       return
 
-    frames = self.render()
+    frames = self.render(camera_name=camera)
     dt = self.env.dt
 
     if not os.path.exists(savedir):

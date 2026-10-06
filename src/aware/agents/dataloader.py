@@ -99,7 +99,7 @@ class DataBuffer:
       safety_threshold = 1e3
       qacc_std = stds[safety_inds]
 
-      if torch.any(qacc_std > safety_threshold):
+      if torch.any(~torch.isfinite(qacc_std) | (qacc_std > safety_threshold)):
         pylogger.warning(f"Unstable behaviour detected!\n"
                          f" -> qacc_inds hardcoded as: {safety_inds}\n"
                          f" -> safety_threshold = {safety_threshold}\n"

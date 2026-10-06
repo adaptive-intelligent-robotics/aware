@@ -28,6 +28,12 @@ WORKDIR /app
 COPY pyproject.toml uv.lock ./
 RUN uv sync --frozen --no-install-project
 
+# mujoco_playground clones mujoco_menagerie (1.6GB, needs git) when first imported, unless
+# the folder exists. The crane does not use it, so create an empty folder instead
+RUN python -c "import importlib.util, pathlib; \
+pathlib.Path(importlib.util.find_spec('mujoco_playground').origin).parent.joinpath( \
+'external_deps', 'mujoco_menagerie').mkdir(parents=True)"
+
 # install the aware package in editable mode, so REPO_ROOT resolves to /app
 COPY . .
 RUN uv sync --frozen

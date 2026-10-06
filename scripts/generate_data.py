@@ -22,7 +22,9 @@ def main(cfg: DictConfig):
   agent.storage.save_configs(cfg)
 
   generate_dataset(env, agent, num_episodes=cfg.num_episodes,
-                   rerandomise_within_episode=cfg.rerandomise_within_episode)
+                   rerandomise_within_episode=cfg.rerandomise_within_episode,
+                   rerandomise_operator=cfg.rerandomise_operator,
+                   render_first_episode=cfg.render_first_episode)
 
 if __name__ == "__main__":
   main()

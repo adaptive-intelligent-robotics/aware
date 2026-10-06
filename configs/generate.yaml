@@ -13,6 +13,8 @@ defaults:
 
 num_episodes: 500
 rerandomise_within_episode: 513 # resample the domain randomisation every N steps
+rerandomise_operator: false     # draw new operators for each episode (the paper dataset did not)
+render_first_episode: true      # save a video of the first environment in the first episode
 seed: 100
 device: cuda
 dataset_path: null
