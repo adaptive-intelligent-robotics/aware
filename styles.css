@@ -1,0 +1,552 @@
+/* Local Latin subsets of the original page fonts; licenses in assets/fonts/. */
+@font-face {
+  font-family: "Archivo";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("./assets/fonts/archivo-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Newsreader";
+  font-style: normal;
+  font-weight: 300 500;
+  font-display: swap;
+  src: url("./assets/fonts/newsreader-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Space Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./assets/fonts/space-mono-latin.woff2") format("woff2");
+}
+.design-page {
+  --bg: #0b0c0e;
+  --bg-2: #101216;
+  --bg-3: #15181d;
+  --fg: #f3f4f5;
+  --muted: #9aa1a8;
+  --faint: #6b7178;
+  --line: rgba(255, 255, 255, 0.12);
+  --line-2: rgba(255, 255, 255, 0.07);
+  --accent: #e85c2b; /* launch-flame, status only */
+  --maxw: 1280px;
+  --pad: clamp(20px, 5vw, 72px);
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  position: relative;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-archivo), system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.design-page * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+.design-page a {
+  color: inherit;
+  text-decoration: none;
+}
+.design-page img,
+.design-page video {
+  display: block;
+  max-width: 100%;
+}
+.design-page .mono {
+  font-family: var(--font-space-mono), monospace;
+}
+.design-page .serif {
+  font-family: var(--font-newsreader), serif;
+}
+
+.design-page .main-wrap {
+  position: relative;
+  z-index: 1;
+}
+.design-page .spacer-intro {
+  height: 100vh;
+}
+.design-page .wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding-left: var(--pad);
+  padding-right: var(--pad);
+}
+
+.design-page .status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-space-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg);
+  margin-bottom: 18px;
+}
+.design-page .status-pill .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 0 rgba(232, 92, 43, 0.6);
+  animation: hpPulse 2.4s infinite;
+}
+@keyframes hpPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(232, 92, 43, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 9px rgba(232, 92, 43, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(232, 92, 43, 0);
+  }
+}
+/* article body */
+.design-page .article {
+  padding: 0 0 clamp(40px, 6vh, 70px);
+}
+.design-page .article-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+}
+.design-page .measure {
+  width: 100%;
+  min-width: 0;
+  max-width: var(--measure);
+  transition: max-width 0.35s var(--ease);
+}
+.design-page .measure p {
+  color: rgba(243, 244, 245, 0.86);
+  font-size: 1.16rem;
+  line-height: var(--body-lh, 1.8);
+  margin-bottom: 1.5em;
+  font-family: var(--font-newsreader), serif;
+  font-weight: 400;
+}
+.design-page .measure h1 {
+  font-family: var(--font-newsreader), serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.8rem, 3.4vw, 2.4rem);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  margin: 1.2em 0 0.6em;
+  color: #fff;
+}
+.design-page .measure h2 {
+  font-family: var(--font-newsreader), serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.5rem, 2.8vw, 2rem);
+  letter-spacing: -0.01em;
+  margin: 1.4em 0 0.6em;
+  color: #fff;
+}
+.design-page .measure > h1:first-child,
+.design-page .measure > h2:first-child {
+  margin-top: 0;
+}
+.design-page .measure h3 {
+  font-family: var(--font-newsreader), serif;
+  font-weight: 500;
+  font-size: clamp(1.25rem, 2.2vw, 1.6rem);
+  letter-spacing: -0.005em;
+  margin: 1.3em 0 0.5em;
+  color: #fff;
+}
+.design-page .measure h4 {
+  font-family: var(--font-archivo), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 1.02rem;
+  letter-spacing: 0.01em;
+  margin: 1.4em 0 0.5em;
+  color: var(--fg);
+}
+.design-page .measure strong {
+  color: #fff;
+  font-weight: 600;
+}
+.design-page .measure em {
+  font-style: italic;
+}
+.design-page .measure a {
+  color: var(--fg);
+  border-bottom: 1px solid var(--line);
+  transition: border-color 0.3s;
+}
+.design-page .measure a:hover {
+  border-color: var(--fg);
+}
+.design-page .measure ul,
+.design-page .measure ol {
+  color: rgba(243, 244, 245, 0.86);
+  font-family: var(--font-newsreader), serif;
+  font-size: 1.16rem;
+  line-height: var(--body-lh, 1.8);
+  margin: 0 0 1.5em;
+  padding-left: 1.4em;
+}
+.design-page .measure ul {
+  list-style-type: disc;
+}
+.design-page .measure ol {
+  list-style-type: decimal;
+}
+.design-page .measure li {
+  margin-bottom: 0.5em;
+}
+.design-page .measure li::marker {
+  color: var(--faint);
+}
+.design-page .measure blockquote {
+  border-left: 2px solid var(--line);
+  padding-left: 1.2em;
+  margin: 0 0 1.5em;
+  color: var(--muted);
+  font-style: italic;
+}
+.design-page .measure hr {
+  border: none;
+  border-top: 1px solid var(--line-2);
+  margin: 2.4em 0;
+}
+.design-page .measure code {
+  font-family: var(--font-space-mono), monospace;
+  font-size: 0.85em;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line-2);
+  border-radius: 4px;
+  padding: 0.12em 0.4em;
+}
+.design-page .measure pre {
+  margin: 1.6em 0;
+  border-radius: 6px;
+  border: 1px solid var(--line-2);
+  overflow-x: auto;
+  font-size: 0.9rem;
+}
+.design-page .measure pre code {
+  background: none;
+  border: none;
+  padding: 0;
+}
+.design-page .measure .citation-block {
+  margin: 1.6em 0;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg-2);
+  overflow: hidden;
+}
+.design-page .measure .citation-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--line-2);
+  color: var(--muted);
+  font-family: var(--font-space-mono), monospace;
+  font-size: 0.75rem;
+}
+.design-page .measure .citation-header button {
+  color: var(--fg);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 5px 9px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.design-page .measure .citation-header button:hover,
+.design-page .measure .citation-header button:focus-visible {
+  border-color: var(--fg);
+}
+.design-page .measure .citation-block pre {
+  margin: 0;
+  padding: 16px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.design-page.projectpage {
+  --measure: 700px;
+  --body-lh: 1.75;
+  overflow-x: clip;
+}
+
+/* DETAIL HERO (full-bleed, shorter than the home featured) */
+.design-page .hero {
+  position: relative;
+  height: 78vh;
+  min-height: 520px;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+.design-page .hero .media {
+  position: absolute;
+  inset: 0;
+}
+.design-page .hero .media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 44%;
+  transform: scale(1.04);
+  transition: transform 10s linear;
+}
+.design-page .hero.in .media img {
+  transform: scale(1);
+}
+.design-page .hero .grad {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(7, 8, 10, 0.95) 0%,
+    rgba(7, 8, 10, 0.55) 34%,
+    rgba(7, 8, 10, 0.12) 62%,
+    rgba(7, 8, 10, 0.4) 100%
+  );
+}
+.design-page .hero-inner {
+  position: relative;
+  width: 100%;
+  padding-bottom: clamp(44px, 7vh, 80px);
+}
+.design-page .hero .crumb {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+/* the shared .status-pill carries a bottom margin for the home featured;
+   inside the hero crumb it is a flex item, so reset it */
+.design-page .hero .crumb .status-pill {
+  margin-bottom: 0;
+}
+.design-page .hero h1 {
+  font-weight: 800;
+  font-size: clamp(2.6rem, 8vw, 6.4rem);
+  line-height: 0.94;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  max-width: 16ch;
+}
+.design-page .hero .lede {
+  font-size: clamp(1.05rem, 1.7vw, 1.3rem);
+  color: rgba(243, 244, 245, 0.86);
+  max-width: 46ch;
+  font-weight: 400;
+}
+.design-page .hero .tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+}
+.design-page .hero .tags span {
+  font-family: var(--font-space-mono), monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(243, 244, 245, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 3px;
+  padding: 5px 10px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* ARTICLE — project body reuses the shared .measure typography, but
+   headings are set in Archivo (not the editorial serif). */
+.design-page.projectpage .article {
+  position: relative;
+  padding: clamp(70px, 10vh, 120px) 0 clamp(40px, 6vh, 70px);
+}
+.design-page.projectpage .section-nav-shell {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  /* Center the 3px line on the shared .wrap content edge. */
+  right: -17px;
+  width: 32px;
+  z-index: 3;
+  pointer-events: none;
+}
+.design-page.projectpage .section-nav {
+  position: sticky;
+  top: clamp(82px, 15vh, 130px);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 32px;
+  height: min(70vh, 620px, 100%);
+  opacity: 0;
+  transition: opacity 0.35s var(--ease);
+  pointer-events: auto;
+}
+.design-page.projectpage .section-nav.visible {
+  opacity: 1;
+}
+.design-page.projectpage .section-nav a {
+  position: relative;
+  display: block;
+  flex-basis: 0;
+  min-height: 0;
+  border: 0;
+}
+.design-page.projectpage .section-nav a::before,
+.design-page.projectpage .section-nav a::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  width: 3px;
+}
+.design-page.projectpage .section-nav a::before {
+  inset-block: 0;
+  background: rgba(243, 244, 245, 0.2);
+}
+.design-page.projectpage .section-nav a::after {
+  top: 0;
+  height: var(--section-fill);
+  background: var(--accent);
+}
+.design-page.projectpage .section-nav a:hover::before,
+.design-page.projectpage .section-nav a:focus-visible::before,
+.design-page.projectpage .section-nav a.active::before {
+  background: rgba(243, 244, 245, 0.7);
+}
+.design-page.projectpage .section-nav a:hover::after,
+.design-page.projectpage .section-nav a:focus-visible::after {
+  background: var(--fg);
+}
+.design-page.projectpage .section-nav-title {
+  position: absolute;
+  right: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: min(240px, calc(100vw - 60px));
+  width: max-content;
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--bg-2);
+  color: var(--fg);
+  font-family: var(--font-space-mono), monospace;
+  font-size: 11px;
+  line-height: 1.35;
+  white-space: normal;
+  text-align: right;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.design-page.projectpage .section-nav a:hover .section-nav-title,
+.design-page.projectpage .section-nav a:focus-visible .section-nav-title {
+  opacity: 1;
+  visibility: visible;
+}
+.design-page.projectpage .measure h2 {
+  scroll-margin-top: 90px;
+  font-family: var(--font-archivo), system-ui, sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+  letter-spacing: -0.01em;
+  margin: 2.2em 0 0.7em;
+  color: #fff;
+}
+.design-page.projectpage .measure > h2:first-child {
+  margin-top: 0;
+}
+
+/* Keep project figures aligned with the reading column. */
+.design-page.projectpage .measure .figure,
+.design-page.projectpage .measure .figure-pair {
+  width: 100%;
+  margin-top: 2.6em;
+  margin-bottom: 2.6em;
+}
+.design-page .figure .frame,
+.design-page .figure-pair .frame {
+  border-radius: 5px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #000;
+}
+.design-page .figure .plot-frame,
+.design-page .figure-pair .plot-frame {
+  background: var(--bg);
+}
+.design-page .figure img,
+.design-page .figure video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.design-page .figure .cap,
+.design-page .figure-pair .cap {
+  margin-top: 14px;
+  text-align: center;
+  font-family: var(--font-space-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.design-page .figure-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.design-page .figure-pair img,
+.design-page .figure-pair video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.design-page .figure-pair .cap {
+  margin-top: 12px;
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+}
+
+
+:root {
+  --font-archivo: "Archivo";
+  --font-newsreader: "Newsreader";
+  --font-space-mono: "Space Mono";
+  color-scheme: dark;
+}
+body { margin: 0; }
+button { font: inherit; background: transparent; }
+[hidden] { display: none !important; }
+.design-page :focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+.design-page .hero { height: 78svh; }
+.design-page .hero .media img { transform: none; transition: none; }
+.design-page .section-nav { opacity: 1; }
+.design-page .section-nav-shell { top: clamp(70px, 10vh, 120px); bottom: clamp(40px, 6vh, 70px); }
+.design-page .section-nav a { min-height: 20px; flex-grow: 1; --section-fill: 0%; }
+.design-page .figure figure, .design-page .figure-pair figure { min-width: 0; }
+.design-page .measure pre { line-height: 1.6; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.design-page .skip-link { position: absolute; z-index: 10; top: 12px; left: 20px; padding: 10px 16px; background: var(--bg); transform: translateY(-200%); }
+.design-page .skip-link:focus { transform: none; }
+@media (max-width: 760px) {
+  .design-page.projectpage .measure .figure-pair { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .design-page *, .design-page *::before, .design-page *::after { animation: none !important; transition: none !important; }
+}
