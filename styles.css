@@ -353,6 +353,36 @@
   max-width: 46ch;
   font-weight: 400;
 }
+.design-page .hero-authorship {
+  margin-top: 24px;
+  max-width: 960px;
+}
+.design-page .hero-authors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  font-size: clamp(0.875rem, 1.25vw, 1rem);
+  line-height: 1.6;
+  font-weight: 500;
+  color: rgba(243, 244, 245, 0.9);
+}
+.design-page .hero-authors span {
+  white-space: nowrap;
+}
+.design-page .hero-affiliation {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.design-page .hero-affiliation a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.design-page .hero-affiliation a:hover,
+.design-page .hero-affiliation a:focus-visible {
+  color: var(--fg);
+}
 .design-page .hero .tags {
   display: flex;
   flex-wrap: wrap;

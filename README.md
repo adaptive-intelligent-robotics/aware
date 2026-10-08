@@ -6,12 +6,18 @@ history from the research code on `main`. Edit and push website changes on
 
 Expected URL: <https://adaptive-intelligent-robotics.github.io/aware/>.
 
+## Presentation video
+
+[![Watch the AWARE CoRL presentation video](assets/AWARE_corl_camera_ready.jpg)](https://adaptive-intelligent-robotics.github.io/aware/assets/AWARE_corl_camera_ready.mp4)
+
+[▶ Watch the AWARE CoRL presentation video](https://adaptive-intelligent-robotics.github.io/aware/assets/AWARE_corl_camera_ready.mp4)
+
 ## Files
 
 - `index.html`: page metadata, hero, article, section anchors, and citation.
 - `styles.css`: page styles and local font declarations.
 - `script.js`: viewport video playback, citation copying, and section progress.
-- `assets/`: one WebP image, seven MP4 videos, three local Latin font subsets,
+- `assets/`: one WebP image, one JPEG video preview, seven MP4 videos, three local Latin font subsets,
   and the fonts' SIL Open Font License notices.
 - `.nojekyll`: retained for compatibility with direct branch publishing.
 - `.github/workflows/pages.yml`: deployment on pushes to `aware-site`.
@@ -92,6 +98,20 @@ Commit and push from the website worktree:
 git add index.html styles.css script.js assets README.md .nojekyll .github/workflows/pages.yml
 git commit -m "Update AWARE project website"
 git push origin aware-site
+```
+Or initiate from main branch with:
+```bash
+git -C .worktrees/aware-site status
+
+git -C .worktrees/aware-site add \
+  index.html styles.css script.js README.md assets
+
+git -C .worktrees/aware-site diff --cached --stat
+
+git -C .worktrees/aware-site commit \
+  -m "Update project page, citation controls, and presentation video"
+
+git -C .worktrees/aware-site push origin aware-site
 ```
 
 The workflow stages only `index.html`, `styles.css`, `script.js`, `.nojekyll`,
