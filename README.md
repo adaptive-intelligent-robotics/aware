@@ -1,11 +1,21 @@
 # Adaptive World-models for Anomaly REcognition (AWARE)
 
-This repository presents the official implementation of [Adaptive World-Models for Anomaly Recognition (AWARE): A Framework for Robot Dynamics Prediction and Introspection](https://sites.google.com/view/aware-framework).
+<p align="center">
+  <a href="https://adaptive-intelligent-robotics.github.io/aware/"><img src="https://img.shields.io/badge/Website-E85C2B?style=for-the-badge" alt="Website"></a>
+  <a href="https://adaptive-intelligent-robotics.github.io/aware/assets/AWARE_corl_camera_ready.mp4"><img src="https://img.shields.io/badge/Video-2563EB?style=for-the-badge" alt="Video"></a>
+  <a href="#citation"><img src="https://img.shields.io/badge/BibTeX-475569?style=for-the-badge" alt="BibTeX"></a>
+  <a href="#license"><img src="https://img.shields.io/badge/Licence-16A34A?style=for-the-badge" alt="Licence"></a>
+</p>
+
+This repository presents the official implementation of [Adaptive World-Models for Anomaly Recognition (AWARE): A Framework for Robot Dynamics Prediction and Introspection](https://adaptive-intelligent-robotics.github.io/aware/).
+
+![System Overview](media/system_overview.jpg)
 
 In this work, we present AWARE, a framework to detect anomalies and provide introspection in robotic systems with only passive, CCTV-only cameras.
 
 ![AWARE architecture](media/system_arch.jpg)
 
+## Contents
 - [Installation](#installation)
 - [Usage](#usage)
   - [Evaluate](#evaluate)
@@ -48,6 +58,12 @@ source .venv/bin/activate
 Or with pip: `pip install -e .`
 
 ## Usage
+
+To download only the research code, run:
+
+```bash
+git clone --single-branch --branch main https://github.com/adaptive-intelligent-robotics/aware.git
+```
 
 Configuration uses [Hydra](https://hydra.cc). Each script has a config in [`configs/`](configs), and any value can be overridden from the command line, e.g. `seed=2`.
 

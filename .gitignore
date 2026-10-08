@@ -7,3 +7,6 @@ wandb/
 __pycache__/
 *.egg-info/
 .venv/
+
+# local website backup and separate branch worktrees
+/.worktrees/
