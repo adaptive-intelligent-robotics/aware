@@ -2809,15 +2809,6 @@ class LatentPredictor(nn.Module):
     # ensure we are in training mode
     self.train()
 
-    # prepare normalisation, if being used during training
-    if self.use_normalisation:
-      debug_norm = True
-      pylogger.info(f"Normalising the trajectory batch in update()")
-      trajectory_batch = apply_norm(trajectory_batch,
-                                    mean=self.norm["full"]["mean"],
-                                    std=self.norm["full"]["std"],
-                                    debug=debug_norm)
-      
     # set up noise to be added to observation throughout this one rollout
     if self.use_noise:
       debug_noise = True
@@ -2894,7 +2885,6 @@ class LatentPredictor(nn.Module):
         # index out the randomised batches and randomised sequences of time indexes
         observations = trajectory_batch[b_idx_past, past_indices].clone()
         full_ground_truth = trajectory_batch[b_idx_future, future_indices].clone()
-        true_traj = full_ground_truth[..., self.i_qs].clone() # take from already indexed ground truth
 
       # sample in temporal sequence
       else:
@@ -2911,7 +2901,26 @@ class LatentPredictor(nn.Module):
         # prepare to pass in everything, including hidden information
         observations = trajectory_batch[:, past].clone()        # keep batch clean
         full_ground_truth = trajectory_batch[:, future].clone() # keep batch clean
-        true_traj = trajectory_batch[:, future, self.i_qs]      # for losses, true qpos/qvel
+
+      # Normalize only the sampled windows. Normalizing trajectory_batch before
+      # sampling creates a second full-size GPU tensor and can exhaust memory.
+      if self.use_normalisation:
+        if n == 0:
+          pylogger.info(f"Normalising sampled trajectory windows in update()")
+        observations = apply_norm(
+            observations,
+            mean=self.norm["full"]["mean"],
+            std=self.norm["full"]["std"],
+            debug=(n == 0),
+        )
+        full_ground_truth = apply_norm(
+            full_ground_truth,
+            mean=self.norm["full"]["mean"],
+            std=self.norm["full"]["std"],
+            debug=False,
+        )
+
+      true_traj = full_ground_truth[..., self.i_qs].clone()
 
       # query the model and get the predicted trajectories
       pred_outputs = self.rollout_prediction(
@@ -3238,14 +3247,14 @@ class LatentPredictor(nn.Module):
         # mass matrix and torque vector losses
         if "pred_M" in extras:
           if self.dense_mass_matrix:
-            true_M = trajectory_batch[:, future, self.i_qM]
+            true_M = full_ground_truth[..., self.i_qM]
           else:
-            true_M_lower = trajectory_batch[:, future, self.i_qM]
+            true_M_lower = full_ground_truth[..., self.i_qM]
             bm, tm, vm = true_M_lower.shape
             true_M = self.unpack_qM(true_M_lower.reshape(bm * tm, vm))
             true_M = true_M.reshape(bm, tm, -1)
-          true_C = trajectory_batch[:, future, self.i_qfrc_in]
-          true_J = trajectory_batch[:, future, self.i_qfrc_out]
+          true_C = full_ground_truth[..., self.i_qfrc_in]
+          true_J = full_ground_truth[..., self.i_qfrc_out]
 
           loss["pred_M"] = self.get_tapered_loss(extras["pred_M"], true_M)
           loss["pred_C"] = self.get_tapered_loss(extras["pred_C"], true_C)
