@@ -1,7 +1,8 @@
 // Progressive enhancements; the article, section links, and video controls
 // remain usable without JavaScript.
 (() => {
-  const videos = Array.from(document.querySelectorAll('video'));
+  // Only muted, looping demo clips participate in automatic viewport playback.
+  const videos = Array.from(document.querySelectorAll('video[muted][loop]'));
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const visible = new Set();
   const manuallyPaused = new Set();
@@ -39,25 +40,37 @@
     reducedMotion.addEventListener('change', () => videos.forEach(updateVideo));
   }
 
-  const copyButton = document.querySelector('#copy-citation');
+  const copyButtons = document.querySelectorAll('[data-copy-citation]');
   const citation = document.querySelector('#citation-code');
   const copyStatus = document.querySelector('#copy-status');
-  if (copyButton && citation && navigator.clipboard?.writeText) {
-    copyButton.hidden = false;
-    copyButton.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(citation.textContent);
-        copyButton.textContent = 'Copied!';
-        copyStatus.textContent = 'BibTeX citation copied to clipboard.';
-      } catch {
-        copyButton.textContent = 'Select BibTeX';
-        const selection = window.getSelection();
-        const range = document.createRange();
-        range.selectNodeContents(citation);
-        selection.removeAllRanges();
-        selection.addRange(range);
-        copyStatus.textContent = 'Copy unavailable. Citation selected; use your keyboard to copy.';
-      }
+  if (citation) {
+    const selectCitation = () => {
+      const selection = window.getSelection();
+      const range = document.createRange();
+      range.selectNodeContents(citation);
+      selection.removeAllRanges();
+      selection.addRange(range);
+    };
+    copyButtons.forEach((copyButton) => {
+      copyButton.addEventListener('click', async () => {
+        try {
+          if (navigator.clipboard?.writeText) {
+            await navigator.clipboard.writeText(citation.textContent);
+          } else {
+            // Legacy fallback for previews without the Clipboard API.
+            selectCitation();
+            if (!document.execCommand?.('copy')) throw new Error('Copy unavailable');
+            window.getSelection().removeAllRanges();
+          }
+          copyButton.textContent = 'Copied!';
+          copyStatus.textContent = 'BibTeX citation copied to clipboard.';
+        } catch {
+          copyButton.textContent = 'Select BibTeX';
+          selectCitation();
+          citation.scrollIntoView({ block: 'center' });
+          copyStatus.textContent = 'Copy unavailable. Citation selected; use your keyboard to copy.';
+        }
+      });
     });
   }
 

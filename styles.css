@@ -285,8 +285,7 @@
 /* DETAIL HERO (full-bleed, shorter than the home featured) */
 .design-page .hero {
   position: relative;
-  height: 78vh;
-  min-height: 520px;
+  min-height: max(520px, 78vh);
   width: 100%;
   overflow: hidden;
   display: flex;
@@ -321,6 +320,7 @@
 .design-page .hero-inner {
   position: relative;
   width: 100%;
+  padding-top: clamp(48px, 8vh, 88px);
   padding-bottom: clamp(44px, 7vh, 80px);
 }
 .design-page .hero .crumb {
@@ -336,13 +336,16 @@
   margin-bottom: 0;
 }
 .design-page .hero h1 {
-  font-weight: 800;
-  font-size: clamp(2.6rem, 8vw, 6.4rem);
-  line-height: 0.94;
-  letter-spacing: -0.03em;
-  text-transform: uppercase;
+  font-weight: 700;
+  font-size: clamp(1.85rem, 3.8vw, 3.5rem);
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
   margin-bottom: 16px;
-  max-width: 16ch;
+  max-width: 29ch;
+}
+.design-page .hero-acronym {
+  white-space: nowrap;
 }
 .design-page .hero .lede {
   font-size: clamp(1.05rem, 1.7vw, 1.3rem);
@@ -366,6 +369,46 @@
   border-radius: 3px;
   padding: 5px 10px;
   background: rgba(255, 255, 255, 0.03);
+}
+.design-page .project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+.design-page .project-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+  background: rgba(11, 12, 14, 0.65);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.4;
+  transition: background 0.2s, border-color 0.2s;
+}
+.design-page .project-link[href]:hover,
+.design-page .project-link[href]:focus-visible,
+.design-page button.project-link:hover,
+.design-page button.project-link:focus-visible {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--fg);
+}
+.design-page button.project-link {
+  cursor: pointer;
+}
+.design-page .project-link[aria-disabled="true"] {
+  color: var(--muted);
+  border-color: var(--line);
+}
+.design-page .resource-status {
+  font-size: 0.7rem;
+  font-weight: 400;
 }
 
 /* ARTICLE — project body reuses the shared .measure typography, but
@@ -534,7 +577,7 @@ body { margin: 0; }
 button { font: inherit; background: transparent; }
 [hidden] { display: none !important; }
 .design-page :focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
-.design-page .hero { height: 78svh; }
+.design-page .hero { min-height: max(520px, 78svh); }
 .design-page .hero .media img { transform: none; transition: none; }
 .design-page .section-nav { opacity: 1; }
 .design-page .section-nav-shell { top: clamp(70px, 10vh, 120px); bottom: clamp(40px, 6vh, 70px); }

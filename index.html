@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#0b0c0e">
-  <title>AWARE — Robot Learning for Anomaly Detection and Introspection through Cameras</title>
+  <title>Adaptive World-Models for Anomaly Recognition (AWARE)</title>
   <meta name="description" content="Detecting anomalies in robotic systems using only high-uncertainty, camera-based monitoring.">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="AWARE — Robot Learning for Anomaly Detection and Introspection through Cameras">
+  <meta property="og:title" content="Adaptive World-Models for Anomaly Recognition (AWARE)">
   <meta property="og:description" content="Detecting anomalies in robotic systems using only high-uncertainty, camera-based monitoring.">
   <link rel="stylesheet" href="./styles.css">
   <script src="./script.js" defer></script>
@@ -19,10 +19,22 @@
     <div class="media"><img src="./assets/crane_front.webp" alt="Robot Learning for Anomaly Detection and Introspection through Cameras" fetchpriority="high" decoding="async"></div>
     <div class="grad" aria-hidden="true"></div>
     <div class="wrap hero-inner">
-      <div class="crumb"><div class="status-pill"><span class="dot" aria-hidden="true"></span>In progress · 2026</div></div>
-      <h1>AWARE</h1>
-      <p class="lede">Detecting anomalies in robotic systems with only CCTV cameras — an air-gapped monitoring resolution for legacy, critical infrastructure.</p>
-      <div class="tags"><span>World Models</span><span>Anomaly Introspection</span><span>Real-world application</span></div>
+      <div class="crumb"><div class="status-pill"><span class="dot" aria-hidden="true"></span>Conference on Robot Learning (CoRL) 2026</div></div>
+      <h1>Adaptive World-Models for Anomaly REcognition <span class="hero-acronym">(AWARE)</span></h1>
+      <p class="lede">A Framework for Robot Dynamics Prediction and Introspection</p>
+
+      <!-- <p class="lede">Detecting anomalies in robotic systems with only CCTV cameras — an air-gapped monitoring resolution for legacy, critical infrastructure.</p> -->
+      <!-- <div class="tags"><span>World Models</span><span>Anomaly Introspection</span><span>Real-world application</span></div> -->
+      <nav class="project-links" aria-label="Project resources">
+        <a class="project-link" href="https://github.com/adaptive-intelligent-robotics/aware" target="_blank" rel="noopener noreferrer">Code <span aria-hidden="true">↗</span></a>
+        <button class="project-link" type="button" data-copy-citation>BibTeX</button>
+
+        <!-- Activate a placeholder by replacing data-href with href, removing
+             role and aria-disabled, and removing its Coming soon label. -->
+        <!-- <a class="project-link" role="link" aria-disabled="true" data-href="https://arxiv.org/abs/REPLACE_WITH_PAPER_ID" target="_blank" rel="noopener noreferrer">arXiv <span class="resource-status">Coming soon</span></a> -->
+        <a class="project-link" role="link" aria-disabled="true" data-href="./assets/aware-paper.pdf" target="_blank" rel="noopener noreferrer">Paper (PDF) <span class="resource-status">Coming soon</span></a>
+        <!-- <a class="project-link" role="link" aria-disabled="true" data-href="./assets/aware-supplementary.pdf" target="_blank" rel="noopener noreferrer">Supplementary (PDF) <span class="resource-status">Coming soon</span></a> -->
+      </nav>
     </div>
   </header>
   <main class="main-wrap wrap">
@@ -32,17 +44,13 @@
 <a href="#deployment-specs" aria-label="Go to Deployment Specs"><span class="section-nav-title">Deployment Specs</span></a>
 <a href="#results" aria-label="Go to Results"><span class="section-nav-title">Results</span></a>
 <a href="#limitations" aria-label="Go to Limitations"><span class="section-nav-title">Limitations</span></a>
-<a href="#extensive-work" aria-label="Go to Extensive Work"><span class="section-nav-title">Extensive Work</span></a>
 <a href="#citation" aria-label="Go to Citation"><span class="section-nav-title">Citation</span></a></nav></div>
       <div class="article-grid"><div class="measure">
-<h2 id="project-overview">Project Overview</h2>
+<h2 id="project-overview">Abstract</h2>
 <p>Unrecongized anomalies in critical infrastructure can rapidly cascade into catastrophic physical or operational failures. Current anomaly detection approaches often rely on direct access to the monitored system by utilizing onboard sensors, such as motor encoders, to detect anomalous states. However, legacy hardware often lacks these sensors, or strict security protocols may prohibit access altogether.</p>
 <p>In this work, we present Adaptive World-model for Anomaly REcognition (AWARE), a world model framework that is capable of anomaly detection using only external camera monitoring via system dynamics estimation and state prediction. </p>
 <p>Evaluated across 240 real-world robotic crane trajectories, including payload collisions and motor degradations, AWARE demonstrates a 26% improvement in anomaly classification over our strongest baseline under noisy, camera-only state estimation. Furthermore, the inferred dynamics parameter can be decoded to identify the source of faults, localizing the degrading motor with 88% accuracy.</p>
-<div class="figure"><figure><div class="frame"><video controls loop muted playsinline preload="metadata" aria-label="Motor Degradation"><source src="./assets/motor_degradation.mp4" type="video/mp4">Your browser cannot play this video. <a href="./assets/motor_degradation.mp4">Download Motor Degradation</a>.</video></div><figcaption class="cap">Motor Degradation</figcaption></figure></div>
-<div class="figure"><figure><div class="frame"><video controls loop muted playsinline preload="metadata" aria-label="Payload Collision"><source src="./assets/cable_collision.mp4" type="video/mp4">Your browser cannot play this video. <a href="./assets/cable_collision.mp4">Download Payload Collision</a>.</video></div><figcaption class="cap">Payload Collision</figcaption></figure></div>
-<div class="figure-pair"><figure><div class="frame"><video controls loop muted playsinline preload="metadata" aria-label="Dangerous Behavior"><source src="./assets/dangerous_movements.mp4" type="video/mp4">Your browser cannot play this video. <a href="./assets/dangerous_movements.mp4">Download Dangerous Behavior</a>.</video></div><figcaption class="cap">Dangerous Behavior</figcaption></figure>
-<figure><div class="frame"><video controls loop muted playsinline preload="metadata" aria-label="Persistent Drag"><source src="./assets/persistent_drag.mp4" type="video/mp4">Your browser cannot play this video. <a href="./assets/persistent_drag.mp4">Download Persistent Drag</a>.</video></div><figcaption class="cap">Persistent Drag</figcaption></figure></div>
+<div class="figure"><figure><div class="frame"><video controls playsinline preload="metadata" aria-label="AWARE project video"><source src="./assets/AWARE_corl_camera_ready.mp4" type="video/mp4">Your browser cannot play this video. <a href="./assets/AWARE_corl_camera_ready.mp4">Download AWARE project video</a>.</video></div><figcaption class="cap">AWARE project video</figcaption></figure></div>
 <h2 id="methodology">Methodology</h2>
 <p>AWARE features two major components:</p>
 <div class="figure"><figure><div class="frame"><video controls loop muted playsinline preload="metadata" aria-label="Camera-based State Estimation"><source src="./assets/bounding_box_compressed.mp4" type="video/mp4">Your browser cannot play this video. <a href="./assets/bounding_box_compressed.mp4">Download Camera-based State Estimation</a>.</video></div><figcaption class="cap">Camera-based State Estimation</figcaption></figure></div>
@@ -64,13 +72,16 @@
 <li>highly accurate world model prediction, with about <strong>3</strong> degrees of error over a 2 second horizon.</li>
 <li><strong>96%</strong> success rate in detecting which motor is impaired with only camera-based state estimation.</li>
 </ul>
+
+<div class="figure"><figure><div class="frame"><video controls loop muted playsinline preload="metadata" aria-label="Motor Degradation"><source src="./assets/motor_degradation.mp4" type="video/mp4">Your browser cannot play this video. <a href="./assets/motor_degradation.mp4">Download Motor Degradation</a>.</video></div><figcaption class="cap">Motor Degradation</figcaption></figure></div>
+<div class="figure"><figure><div class="frame"><video controls loop muted playsinline preload="metadata" aria-label="Payload Collision"><source src="./assets/cable_collision.mp4" type="video/mp4">Your browser cannot play this video. <a href="./assets/cable_collision.mp4">Download Payload Collision</a>.</video></div><figcaption class="cap">Payload Collision</figcaption></figure></div>
+<div class="figure-pair"><figure><div class="frame"><video controls loop muted playsinline preload="metadata" aria-label="Dangerous Behavior"><source src="./assets/dangerous_movements.mp4" type="video/mp4">Your browser cannot play this video. <a href="./assets/dangerous_movements.mp4">Download Dangerous Behavior</a>.</video></div><figcaption class="cap">Dangerous Behavior</figcaption></figure>
+<figure><div class="frame"><video controls loop muted playsinline preload="metadata" aria-label="Persistent Drag"><source src="./assets/persistent_drag.mp4" type="video/mp4">Your browser cannot play this video. <a href="./assets/persistent_drag.mp4">Download Persistent Drag</a>.</video></div><figcaption class="cap">Persistent Drag</figcaption></figure></div>
 <h2 id="limitations">Limitations</h2>
 <p>A core limitation of the AWARE method is its assume fixed operating conditions under our reference distribution. Whilst AWARE is robust to the initial distribution choice, moving to a new non-anomalous operating point (e.g. a mobile robot traversing varying terrain) may trigger false positives.
 Future work could address this through periodic updates of the reference distribution or defining separate intrinsic and extrinsic reference distributions to separate harmless changes in the environment from true intrinsic failures.</p>
-<h2 id="extensive-work">Extensive Work</h2>
-<p>We design AWARE to be platform-agnostic. It would be interesting to see the transferability of method on a complete different platform, for example, a quadruped robot. The robot contains higher dimensional observations that poses many challenges to the state estimation, such as self-occlusion. In the meantime, the moving robot suggests a dynamic nominal condition that changes with respect to the interection between robot and the environment. Also, it remains unclear whether AWARE still detects reliably when the locotion policy internally incorporates a level of self-correction.</p>
 <h2 id="citation">Citation</h2>
-<div class="citation-block"><div class="citation-header"><span>BibTeX</span><button id="copy-citation" type="button" aria-label="Copy BibTeX citation" hidden>Copy BibTeX</button><span id="copy-status" class="sr-only" role="status"></span></div><pre><code id="citation-code">@article{bold2026aware,
+<div class="citation-block"><div class="citation-header"><span>BibTeX</span><button id="copy-citation" type="button" data-copy-citation aria-label="Copy BibTeX citation">Copy BibTeX</button><span id="copy-status" class="sr-only" role="status"></span></div><pre><code id="citation-code">@article{bold2026aware,
   author  = {Luke Beddow, George Mavroghenis, Rodrigo Alonso Chacon Quesada, Kamil Dreczkowski, Cong Sun, Jiankai Wang, Oscar Kwong-Fai Pang, Antoine Cully},
   title   = {Adaptive World Model for Anomaly Recognition},
   journal = {Conference on Robot Learning},

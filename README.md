@@ -11,13 +11,13 @@ Expected URL: <https://adaptive-intelligent-robotics.github.io/aware/>.
 - `index.html`: page metadata, hero, article, section anchors, and citation.
 - `styles.css`: page styles and local font declarations.
 - `script.js`: viewport video playback, citation copying, and section progress.
-- `assets/`: one WebP image, six MP4 videos, three local Latin font subsets,
+- `assets/`: one WebP image, seven MP4 videos, three local Latin font subsets,
   and the fonts' SIL Open Font License notices.
 - `.nojekyll`: retained for compatibility with direct branch publishing.
 - `.github/workflows/pages.yml`: deployment on pushes to `aware-site`.
 
 No framework, package installation, build step, CDN, analytics, or external
-font requests are required. The site is approximately 39 MB, predominantly
+font requests are required. The site is approximately 67 MB, predominantly
 video. Runtime asset URLs are relative and work below the `/aware/` path.
 
 ## Work on the website
@@ -43,20 +43,27 @@ cd aware-site
 
 ## Preview locally
 
-From the website worktree or standalone clone:
+From the research checkout root:
 
 ```bash
-python3 -m http.server 8080 --bind 127.0.0.1
+python3 -m http.server 8080 --bind 127.0.0.1 \
+  --directory .worktrees/aware-site
 ```
 
 Visit <http://localhost:8080/>. Press Ctrl+C to stop the server.
+From a standalone website clone or inside the website worktree, omit
+`--directory .worktrees/aware-site`.
 The ignored local backup in the research checkout can also be previewed with
 `python3 -m http.server 8080 --bind 127.0.0.1 --directory site`.
 
-Videos have native controls and play automatically only while visible, unless
-reduced motion is enabled or the visitor has paused them. The article, section
-links, and media controls work without JavaScript. Citation copying requires
-clipboard support and HTTPS or localhost; the text is always available to select.
+The AWARE project video before the Abstract uses native play/pause and volume
+controls, starts with sound enabled, and plays only when requested without
+looping. The six muted, looping demo clips play automatically only while visible,
+unless reduced motion is enabled or the visitor has paused them. The article, section
+links, and media controls work without JavaScript. Both Copy BibTeX buttons stay
+visible. With JavaScript, they use the Clipboard API on HTTPS or localhost and
+try a legacy copy fallback when that API is unavailable. If copying is blocked,
+the citation is selected for manual copying. The text is always available to select.
 
 ## Enable GitHub Pages
 
@@ -98,6 +105,21 @@ button: GitHub requires a manually dispatched workflow to also exist on the
 default branch, and this workflow is maintained entirely on `aware-site`.
 
 ## Update the snapshot
+
+### Project resource links
+
+The resource row below the hero tags is in `nav.project-links` in `index.html`.
+The Code link points to the research repository. arXiv, Paper (PDF), and
+Supplementary (PDF) are disabled placeholders labelled **Coming soon**.
+
+To activate a resource, replace its `data-href` attribute with `href`, enter the
+actual destination, remove `role="link"` and `aria-disabled="true"`, and remove
+the `<span class="resource-status">Coming soon</span>` label. External links
+use an absolute HTTPS URL. For local PDFs, add `aware-paper.pdf` or
+`aware-supplementary.pdf` to `assets/` and use the relative paths already provided
+in the placeholders. Files in `assets/` are included automatically in deployment.
+
+### Article and media
 
 Edit `index.html` for text, metadata, tags, or citation changes. Replace files in
 `assets/` for media changes, retaining the referenced filenames or updating their
